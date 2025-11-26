@@ -32,7 +32,7 @@
     [ "btn1:2.r", "uno:5V", "green", [ "h9.8", "v134.6", "h-220.8" ] ],
     [ "btn1:1.l", "uno:6", "green", [ "h0" ] ],
     [ "uno:6", "uno:GND.3", "black", [ "v163.8", "h-16.1" ] ],
-    [ "pir1:OUT", "uno:3", "green", [ "v48", "h226.26" ] ]
+    [ "pir1:OUT", "uno:2", "green", [ "h230.26", "v57.6" ] ]
   ],
   "dependencies": {}
 }
