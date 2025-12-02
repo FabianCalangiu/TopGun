@@ -126,6 +126,7 @@ void loop() {
           printedStandby = false;
           digitalWrite(LED, LOW);
           pMotor->off();
+          delay(1000);
           currentState = STANDBY;
         } else {
           Serial.println("Target missed! Retry!");
