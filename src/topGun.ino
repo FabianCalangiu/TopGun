@@ -109,6 +109,15 @@ void loop() {
       pos -= delta;
       delta = -delta;
       int randInt = (int) random(0, 10);
+
+      if((getDistance() * 100) > 100 ){
+          Serial.println("Target escaped... tracking.");
+          buttonPressed = false;
+          printedStandby = false;
+          digitalWrite(LED, LOW);
+          pMotor->off();
+          currentState = TRACKING;
+      }
       
       if(buttonPressed){
         if(randInt % 2 == 0) {
@@ -125,5 +134,5 @@ void loop() {
       }
       break;
   }
-
+  
 }
