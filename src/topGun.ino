@@ -49,8 +49,7 @@ void setup() {
   delta = 1;
   currentState = STANDBY;
 
-  timer = new Timer;
-  timer->setupPeriod(TIMER_PERIOD);
+  timer = new Timer();
 }
 
 float getDistance()
@@ -97,9 +96,9 @@ void loop() {
         Serial.println("Target out of range, go to STANDBY! ");
         currentState = STANDBY;
       }
-
       break;
     case LOCKIN:
+
       digitalWrite(LED, HIGH);
       pMotor->on();
       pos = (int)random(0,180);
@@ -110,7 +109,9 @@ void loop() {
       delta = -delta;
       int randInt = (int) random(0, 10);
 
-      if((getDistance() * 100) > 100 ){
+
+
+      if((getDistance() * 100) > triggerDistance){
           Serial.println("Target escaped... tracking.");
           buttonPressed = false;
           printedStandby = false;
