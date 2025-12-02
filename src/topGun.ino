@@ -33,6 +33,7 @@ States currentState;
 Timer* timer;
 
 const int triggerDistance = 100;
+const int outOfRangeDist = 350;
 
 void setup() {
   Serial.begin(115200);
@@ -69,7 +70,7 @@ float getDistance()
 }
 
 void wakeUp(){
-  Serial.println("movimento rilevato → attivazione tracciamento.");
+  Serial.println("Detecting movement -> Tracking...");
   currentState = TRACKING;
 }
 
@@ -88,12 +89,12 @@ void loop() {
     case TRACKING:
       delay(100);
       if((getDistance() * 100) < triggerDistance) {
-        Serial.println("Target Revealed, go to LOCKIN! ");
+        Serial.println("Target in range, go to LOCKIN! ");
         currentState = LOCKIN;
       }
 
-      if((getDistance() * 100) > triggerDistance) {
-        Serial.println("Target is gone, go to STANDBY! ");
+      if((getDistance() * 100) > outOfRangeDist) {
+        Serial.println("Target out of range, go to STANDBY! ");
         currentState = STANDBY;
       }
 
