@@ -14,5 +14,4 @@ public:
 
 extern volatile bool timerFlag;
 
-
 #endif

@@ -1,20 +1,14 @@
 #include <Arduino.h>
 #include <Timer.h>
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
 #include <Setup.h>
 #include <UDS.h>
+#include <SleepUtils.h>
 
 Timer* timer;
 
 void setup() {
   Setup();
   timer = new Timer();
-}
-
-void wakeUp(){
-  Serial.println("Detecting movement -> Tracking...");
-  currentState = TRACKING;
 }
 
 void loop() {
@@ -24,10 +18,7 @@ void loop() {
         Serial.println("Powering down...");
         printedStandby = true;
       }
-      set_sleep_mode(SLEEP_MODE_PWR_DOWN);  
-      sleep_enable();
-      sleep_mode();  
-      sleep_disable();
+      Sleep();
       break;
     case TRACKING:
       delay(100);

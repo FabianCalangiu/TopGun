@@ -1,16 +1,19 @@
 #include <UDS.h>
 #include <Arduino.h>
 
+// Initialize sensor parameters
 DistanceSensor::DistanceSensor(int trigger, int eLocator): 
     trig(trigger),
     echo(eLocator), 
     vs(331.45 + 0.62 * 20)
+
+// Constructor body
 {
-    pinMode(trig, OUTPUT);
+    pinMode(trig, OUTPUT); 
     pinMode(echo, INPUT);
 }
 
-
+// Function to calculate the distance
 float DistanceSensor::getDistance() {
     digitalWrite(trig, LOW);
     delayMicroseconds(10);

@@ -11,10 +11,13 @@ const int TRIG = 13;
 const int ECHO = 12;
 const int TIMER_PERIOD = 100;
 
+// Parameters needed for the servo 
 int pos;   
 int delta;
+
 bool printedStandby = false;
 bool buttonPressed = false;
+
 const int triggerDistance = 100;
 const int outOfRangeDist = 350;
 
