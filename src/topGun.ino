@@ -1,71 +1,15 @@
-#include "Arduino.h"
-#include "Timer.h"
-#include "servo_motor_impl.h"
-#include "servo_motor.h"
+#include <Arduino.h>
+#include <Timer.h>
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
-
-#define PIR 2
-#define TRIG 13
-#define ECHO 12
-#define LED 7
-#define BTN 6
-#define SERVO 5
-
-#define TIMER_PERIOD 100
-
-int pos;   
-int delta;
-ServoMotor* pMotor;
-
-bool printedStandby = false;
-bool buttonPressed = false;
-
-const double vs = 331.45 + 0.62*20;
-
-enum States{
-  STANDBY,
-  TRACKING,
-  LOCKIN
-};
-States currentState;
+#include <Setup.h>
+#include <UDS.h>
 
 Timer* timer;
 
-const int triggerDistance = 100;
-const int outOfRangeDist = 350;
-
 void setup() {
-  Serial.begin(115200);
-  pinMode(BTN, INPUT);
-  pinMode(LED, OUTPUT);
-  pinMode(PIR, INPUT);
-  pinMode(TRIG, OUTPUT);
-  pinMode(ECHO, INPUT);
-
-  attachInterrupt(digitalPinToInterrupt(PIR), wakeUp, RISING);
-  pMotor = new ServoMotorImpl(SERVO);
-  pos = 0;
-  delta = 1;
-  currentState = STANDBY;
-
+  Setup();
   timer = new Timer();
-}
-
-float getDistance()
-{
-    digitalWrite(TRIG,LOW);
-    delayMicroseconds(10);
-
-    digitalWrite(TRIG,HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG,LOW);
-    
-    long tUS = pulseInLong(ECHO, HIGH);
-
-    double t = tUS / 1000.0 / 1000.0 / 2;
-    double d = t*vs;
-    return d;
 }
 
 void wakeUp(){
@@ -87,12 +31,12 @@ void loop() {
       break;
     case TRACKING:
       delay(100);
-      if((getDistance() * 100) < triggerDistance) {
+      if((distanceSensor.getDistance() * 100) < triggerDistance) {
         Serial.println("Target in range, go to LOCKIN! ");
         currentState = LOCKIN;
       }
 
-      if((getDistance() * 100) > outOfRangeDist) {
+      if((distanceSensor.getDistance() * 100) > outOfRangeDist) {
         Serial.println("Target out of range, go to STANDBY! ");
         currentState = STANDBY;
       }
@@ -109,9 +53,7 @@ void loop() {
       delta = -delta;
       int randInt = (int) random(0, 10);
 
-
-
-      if((getDistance() * 100) > triggerDistance){
+      if((distanceSensor.getDistance() * 100) > triggerDistance){
           Serial.println("Target escaped... tracking.");
           buttonPressed = false;
           printedStandby = false;
