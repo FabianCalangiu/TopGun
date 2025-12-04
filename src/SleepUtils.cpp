@@ -1,7 +1,4 @@
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
 #include <SleepUtils.h>
-#include <Setup.h>
 
 void wakeUp(){
   Serial.println("Detecting movement -> Tracking...");

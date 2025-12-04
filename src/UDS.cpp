@@ -1,5 +1,4 @@
-#include <UDS.h>
-#include <Arduino.h>
+#include <Setup.h>
 
 // Initialize sensor parameters
 DistanceSensor::DistanceSensor(int trigger, int eLocator): 
@@ -26,5 +25,19 @@ float DistanceSensor::getDistance() {
 
     double t = tUS / 1e6 / 2.0;
     double d = t * vs;
-    return d;
+    return d * 100;
+}
+
+float DistanceSensor::getVelocity(){
+    float vel;
+    float d1 = getDistance();
+    timer->waitForNextTick();
+    float d2 = getDistance();
+    float distDiff = d1 - d2;
+    if(distDiff < 0){
+        distDiff = -distDiff;
+    }
+    vel = (distDiff / 100) / 0.1;
+
+    return vel;
 }

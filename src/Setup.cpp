@@ -1,7 +1,4 @@
 #include <Setup.h>
-#include <Arduino.h>
-#include <servo_motor_impl.h>
-#include <servo_motor.h>
 
 const int PIR = 2;
 const int LED = 7;
@@ -21,6 +18,7 @@ bool buttonPressed = false;
 const int triggerDistance = 100;
 const int outOfRangeDist = 350;
 
+Timer* timer;
 ServoMotor* pMotor;
 DistanceSensor distanceSensor(TRIG, ECHO);
 
@@ -36,4 +34,6 @@ void Setup(){
   pos = 0;
   delta = 1;
   currentState = STANDBY;
+  timer = new Timer();
+  timer->setupPeriod(TIMER_PERIOD);
 }

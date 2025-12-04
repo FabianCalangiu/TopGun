@@ -3,12 +3,14 @@
 #include <servo_motor_impl.h>
 #include <servo_motor.h>
 #include <UDS.h>
+#include <Timer.h>
 
 void Setup();
 void wakeUp();
 
 extern ServoMotor* pMotor;
 extern DistanceSensor distanceSensor;
+extern Timer* timer;
 
 enum States{
   STANDBY,

@@ -4,11 +4,8 @@
 #include <UDS.h>
 #include <SleepUtils.h>
 
-Timer* timer;
-
 void setup() {
   Setup();
-  timer = new Timer();
 }
 
 void loop() {
@@ -21,16 +18,20 @@ void loop() {
       Sleep();
       break;
     case TRACKING:
-      delay(100);
-      if((distanceSensor.getDistance() * 100) < triggerDistance) {
+      Serial.print("Target going at ");
+      Serial.print(distanceSensor.getVelocity());
+      Serial.println(" m/s.");
+      
+      if((distanceSensor.getDistance()) < triggerDistance) {
         Serial.println("Target in range, go to LOCKIN! ");
         currentState = LOCKIN;
       }
 
-      if((distanceSensor.getDistance() * 100) > outOfRangeDist) {
+      if((distanceSensor.getDistance()) > outOfRangeDist) {
         Serial.println("Target out of range, go to STANDBY! ");
         currentState = STANDBY;
       }
+      
       break;
     case LOCKIN:
 
@@ -40,11 +41,9 @@ void loop() {
       buttonPressed = digitalRead(BTN);
       delay(125);
       pMotor->setPosition(pos);
-      pos -= delta;
-      delta = -delta;
       int randInt = (int) random(0, 10);
 
-      if((distanceSensor.getDistance() * 100) > triggerDistance){
+      if((distanceSensor.getDistance()) > triggerDistance){
           Serial.println("Target escaped... tracking.");
           buttonPressed = false;
           printedStandby = false;
@@ -59,6 +58,8 @@ void loop() {
           buttonPressed = false;
           printedStandby = false;
           digitalWrite(LED, LOW);
+          pos = 0;
+          pMotor->setPosition(pos);
           pMotor->off();
           delay(1000);
           currentState = STANDBY;
@@ -69,5 +70,4 @@ void loop() {
       }
       break;
   }
-  
 }
