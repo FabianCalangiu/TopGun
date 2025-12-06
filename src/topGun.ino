@@ -1,8 +1,6 @@
 #include <Arduino.h>
-#include <Timer.h>
 #include <Setup.h>
-#include <UDS.h>
-#include <SleepUtils.h>
+#include <StateUtils.h>
 
 void setup() {
   Setup();
@@ -11,27 +9,10 @@ void setup() {
 void loop() {
   switch(currentState){
     case STANDBY:
-      if(!printedStandby) {
-        Serial.println("Powering down...");
-        printedStandby = true;
-      }
-      Sleep();
+      Standby();
       break;
     case TRACKING:
-      Serial.print("Target going at ");
-      Serial.print(distanceSensor.getVelocity());
-      Serial.println(" m/s.");
-      
-      if((distanceSensor.getDistance()) < triggerDistance) {
-        Serial.println("Target in range, go to LOCKIN! ");
-        currentState = LOCKIN;
-      }
-
-      if((distanceSensor.getDistance()) > outOfRangeDist) {
-        Serial.println("Target out of range, go to STANDBY! ");
-        currentState = STANDBY;
-      }
-      
+      Tracking();
       break;
     case LOCKIN:
 
