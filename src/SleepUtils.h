@@ -5,6 +5,8 @@
 #include <avr/interrupt.h>
 #include <Setup.h>
 
+// Functions needed to enter/exit sleep mode
+
 void wakeUp();
 void Sleep();
 

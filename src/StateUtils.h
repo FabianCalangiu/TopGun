@@ -5,6 +5,8 @@
 #include <SleepUtils.h>
 #include <UDS.h>
 
+// State changes are stored here
+
 void Standby();
 void Tracking();
 void LockIn();

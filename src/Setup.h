@@ -5,6 +5,8 @@
 #include <UDS.h>
 #include <Timer.h>
 
+// All needed variables for the code are initialized here
+
 void Setup();
 void wakeUp();
 

@@ -11,9 +11,12 @@ const int TIMER_PERIOD = 100;
 // Parameters needed for the servo 
 int pos;   
 int delta;
+// ------------------------------
 
+// Misc 
 bool printedStandby = false;
 bool buttonPressed = false;
+// ------------------------------
 
 const int triggerDistance = 100;
 const int outOfRangeDist = 350;

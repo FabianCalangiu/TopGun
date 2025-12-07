@@ -1,6 +1,6 @@
 #include <Setup.h>
 
-// Initialize sensor parameters
+// Initializes sensor parameters
 DistanceSensor::DistanceSensor(int trigger, int eLocator): 
     trig(trigger),
     echo(eLocator), 
@@ -28,6 +28,7 @@ float DistanceSensor::getDistance() {
     return d * 100;
 }
 
+// Calculates velocity in m/s 
 float DistanceSensor::getVelocity(){
     float vel;
     float d1 = getDistance();
@@ -37,6 +38,8 @@ float DistanceSensor::getVelocity(){
     if(distDiff < 0){
         distDiff = -distDiff;
     }
+
+    // 0.1s is the time elapsed between movement
     vel = (distDiff / 100) / 0.1;
 
     return vel;
