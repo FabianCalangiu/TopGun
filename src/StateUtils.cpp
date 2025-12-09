@@ -42,6 +42,9 @@ void LockIn(){
         buttonPressed = false;
         printedStandby = false;
         digitalWrite(LED, LOW);
+        pos = 0;
+        pMotor->setPosition(pos);
+        delay(100);
         pMotor->off();
         currentState = TRACKING;
     }
@@ -56,8 +59,8 @@ void LockIn(){
             digitalWrite(LED, LOW);
             pos = 0;
             pMotor->setPosition(pos);
-            pMotor->off();
             delay(1000);
+            pMotor->off();
             currentState = STANDBY;
         } else {
             Serial.println("Target missed! Retry!");

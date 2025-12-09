@@ -4,11 +4,11 @@
 #include <servo_motor.h>
 #include <UDS.h>
 #include <Timer.h>
+#include <SleepUtils.h>
 
 // All needed variables for the code are initialized here
 
 void Setup();
-void wakeUp();
 
 extern ServoMotor* pMotor;
 extern DistanceSensor distanceSensor;
